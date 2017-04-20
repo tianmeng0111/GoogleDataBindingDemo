@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <!--基本用法-->
+        <variable
+            name="user"
+            type="com.tm.example.googledatabindingdemo.User"/>
+        <!--或这种方式写-->
+        <!--
+        <import type="com.tm.example.googledatabindingdemo.User"/>
+        <variable
+            name="user"
+            type="User"/>
+            -->
+
+        <!--高级用法：调用StringUtils中的方法-->
+        <import type="com.tm.example.googledatabindingdemo.StringUtils"/>
+        <!--可以起别名-->
+        <import type="com.tm.example.googledatabindingdemo.DetailUser" alias="detail"/>
+        <variable
+            name="detailUser"
+            type="detail"/>
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{StringUtils.capitalize(user.firstName)}"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.lastName}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{detailUser.age}"/>
+
+        <!--    联合运算符，相当于：
+        android:text="@{detailUser.name !=null ? detailUser.name : (StringUtils.capitalize(user.firstName) + StringUtils.capitalize(user.lastName))}"
+        -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{detailUser.name ?? StringUtils.capitalize(user.firstName) + StringUtils.capitalize(user.lastName)}"/>
+
+        <!--Java 中定义的属性值赋值给 xml 属性-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="is adult"-->
+            <!--android:visibility="@{detailUser.isAdult ? View.VISIBLE : View.GONE}"/>-->
+
+
+
+    </LinearLayout>
+
+</layout>
